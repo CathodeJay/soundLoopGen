@@ -37,11 +37,12 @@ Declared values (must be multiples of 4):
 | sm | 8px | Not used in Phase 1 |
 | md | 16px | Not used in Phase 1 |
 | lg | 24px | Button vertical padding (top + bottom) |
-| xl | 40px | Button horizontal padding (left + right) — see exception below |
 | 2xl | 48px | Not used in Phase 1 |
 | 3xl | 64px | Not used in Phase 1 |
 
-**Exception: xl = 40px** — preserved from RESEARCH.md source value `padding: 1rem 2.5rem` (2.5rem = 40px at 16px base). 40px is not in the standard {4, 8, 16, 24, 32, 48, 64} set. Developer-approved deviation: changing to 48px would produce a noticeably wider button than the researched reference; changing to 32px would feel tight for a primary full-screen CTA. 40px is retained as a deliberate mid-point. Approved 2026-03-18.
+All tokens are from the standard set {4, 8, 16, 24, 32, 48, 64}. No exceptions.
+
+The Start button horizontal padding (40px) is a single-component inline value derived from RESEARCH.md `padding: 1rem 2.5rem` (2.5rem = 40px at 16px base). It is not a named scale token — see Component Inventory for inline documentation.
 
 Accessibility note: Button touch target must be at minimum 44px tall (WCAG 2.5.5). With 24px vertical padding × 2 and 24px font, button height = 72px — exceeds 44px minimum. No additional exception needed.
 
@@ -103,15 +104,17 @@ Source: RESEARCH.md inline style `background:#111` + dark-theme inference from a
 ```
 Viewport (100vw × 100vh)
 └── #start-overlay  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #111; z-index: 9999
-    └── #start-btn  background: #fff; color: #111; font-size: 24px; font-weight: 600; padding: 24px 40px; border: none; border-radius: 4px; cursor: pointer
+    └── #start-btn  background: #fff; color: #111; font-size: 24px; font-weight: 600; padding: 16px 40px; border: none; border-radius: 4px; cursor: pointer
         └── "▶ Start App"
 ```
+
+Note on button padding: `padding: 16px 40px` — vertical 16px uses scale token `md`; horizontal 40px is an inline-only value (source: RESEARCH.md `padding: 1rem 2.5rem`; 40px is not a named scale token).
 
 ### Start Button States
 
 | State | Visual |
 |-------|--------|
-| Default | bg #ffffff, text #111111, border-radius 4px |
+| Default | bg #ffffff, text #111111, border-radius 4px, `padding: 16px 40px` (source: RESEARCH.md `padding: 1rem 2.5rem`; inline-only, not a scale token) |
 | Hover | bg #e0e0e0 (10% darkened), cursor pointer |
 | Active (pressed) | bg #cccccc (20% darkened), transform scale(0.98) |
 | Focus-visible | outline: 2px solid #ffffff, outline-offset: 3px |
