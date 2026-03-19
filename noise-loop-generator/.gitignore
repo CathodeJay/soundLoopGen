@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# CC0 sample WAV files — large binaries, download manually (see public/samples/LICENSE.md)
+public/samples/*.wav
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
