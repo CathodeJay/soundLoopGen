@@ -8,15 +8,15 @@
 ### Audio Engine
 
 - [x] **ENG-01**: App initializes AudioContext on first user gesture (no silent autoplay failure)
-- [ ] **ENG-02**: White noise is synthesized in real-time via AudioWorklet
-- [ ] **ENG-03**: Pink noise is synthesized in real-time via AudioWorklet
-- [ ] **ENG-04**: Brown noise is synthesized in real-time via AudioWorklet
-- [ ] **ENG-05**: Grey noise is synthesized in real-time via AudioWorklet
+- [x] **ENG-02**: White noise is synthesized in real-time via AudioWorklet
+- [x] **ENG-03**: Pink noise is synthesized in real-time via AudioWorklet
+- [x] **ENG-04**: Brown noise is synthesized in real-time via AudioWorklet
+- [x] **ENG-05**: Grey noise is synthesized in real-time via AudioWorklet
 - [ ] **ENG-06**: Rain sound plays from a CC0 WAV sample with seamless looping
 - [ ] **ENG-07**: Wind sound plays from a CC0 WAV sample with seamless looping
 - [ ] **ENG-08**: Thunder sound plays from a CC0 WAV sample with seamless looping
-- [ ] **ENG-09**: Each sound has an independently adjustable gain (volume)
-- [ ] **ENG-10**: Multiple sounds can play simultaneously
+- [x] **ENG-09**: Each sound has an independently adjustable gain (volume)
+- [x] **ENG-10**: Multiple sounds can play simultaneously
 
 ### Mixer UI
 
@@ -67,15 +67,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | ENG-01 | Phase 1 | Complete |
-| ENG-02 | Phase 2 | Pending |
-| ENG-03 | Phase 2 | Pending |
-| ENG-04 | Phase 2 | Pending |
-| ENG-05 | Phase 2 | Pending |
+| ENG-02 | Phase 2 | Complete |
+| ENG-03 | Phase 2 | Complete |
+| ENG-04 | Phase 2 | Complete |
+| ENG-05 | Phase 2 | Complete |
 | ENG-06 | Phase 2 | Pending |
 | ENG-07 | Phase 2 | Pending |
 | ENG-08 | Phase 2 | Pending |
-| ENG-09 | Phase 2 | Pending |
-| ENG-10 | Phase 3 | Pending |
+| ENG-09 | Phase 2 | Complete |
+| ENG-10 | Phase 3 | Complete |
 | UI-01 | Phase 3 | Pending |
 | UI-02 | Phase 3 | Pending |
 | UI-03 | Phase 3 | Pending |

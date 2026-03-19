@@ -2,16 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-19T02:05:23.936Z"
-last_activity: 2026-03-18 — Roadmap created
+status: unknown
+stopped_at: Phase 2 plans complete — ready to execute
+last_updated: "2026-03-19T22:38:48.337Z"
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 1
-  completed_plans: 1
-  percent: 0
+  total_plans: 3
+  completed_plans: 2
 ---
 
 # Project State
@@ -21,16 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-18)
 
 **Core value:** Generate a seamlessly-looping WAV file from a mix of calming sounds that can be dropped straight into a video editor.
-**Current focus:** Phase 1 - Foundation
+**Current focus:** Phase 02 — sound-generation
 
 ## Current Position
 
-Phase: 1 of 4 (Foundation)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-03-18 — Roadmap created
-
-Progress: [░░░░░░░░░░] 0%
+Phase: 02 (sound-generation) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -53,6 +47,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 2min | 2 tasks | 7 files |
+| Phase 02-sound-generation P01 | 2min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -67,6 +62,9 @@ Recent decisions affecting current work:
 - No backend — local-only tool running on localhost via Vite dev server
 - [Phase 01-foundation]: Lazy AudioContext singleton with getContext/ensureRunning pattern — sampleRate 44100 pinned to prevent Phase 4 resampling artifacts
 - [Phase 01-foundation]: AudioWorklet files must live in public/worklets/ (static assets) not src/ — Vite would bundle src/ files breaking addModule()
+- [Phase 02-sound-generation P01]: Grey noise IIR filter applied main-thread via createIIRFilter (not inside worklet) — keeps worklet simple and works with OfflineAudioContext in Phase 4
+- [Phase 02-sound-generation P01]: workletReady Map prevents duplicate addModule() calls; sampleBuffers Map caches decoded AudioBuffers after first fetch
+- [Phase 02-sound-generation P01]: Catalog entries use convention-based path derivation (/worklets/{id}-noise-processor.js, /samples/{id}.wav) — no paths stored in catalog
 
 ### Pending Todos
 
@@ -80,6 +78,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-19T02:05:23.932Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-sound-generation/02-CONTEXT.md
+Last session: 2026-03-19T22:37:54Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: .planning/phases/02-sound-generation/02-02-PLAN.md
