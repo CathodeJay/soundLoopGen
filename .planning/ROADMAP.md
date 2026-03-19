@@ -28,7 +28,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. After the first user gesture, AudioContext state transitions from suspended to running (visible in console or DevTools)
   3. No 404 errors on AudioWorklet module load
   4. App runs from `npm run dev` on macOS without Docker or complex setup
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 01-01-PLAN.md — Scaffold Vite project and implement AudioContext bootstrap (ENG-01)
 
 ### Phase 2: Sound Generation
 **Goal**: Every sound in the catalog plays correctly in isolation — synthesized noise runs continuously, samples loop without audible gaps
@@ -72,7 +75,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/1 | Not started | - |
 | 2. Sound Generation | 0/TBD | Not started | - |
 | 3. Mixer | 0/TBD | Not started | - |
 | 4. Export | 0/TBD | Not started | - |
