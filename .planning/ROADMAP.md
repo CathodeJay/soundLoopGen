@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 1 plan
 
 Plans:
-- [ ] 01-01-PLAN.md — Scaffold Vite project and implement AudioContext bootstrap (ENG-01)
+- [x] 01-01-PLAN.md — Scaffold Vite project and implement AudioContext bootstrap (ENG-01)
 
 ### Phase 2: Sound Generation
 **Goal**: Every sound in the catalog plays correctly in isolation — synthesized noise runs continuously, samples loop without audible gaps
@@ -43,7 +43,11 @@ Plans:
   3. Rain, wind, and thunder samples play with no audible gap at the loop boundary
   4. All CC0 sample files have verified license documentation
   5. Per-sound volume control works (adjusting gain produces audible change)
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Noise synthesizers, catalog, soundManager, and dev test UI (ENG-02, ENG-03, ENG-04, ENG-05, ENG-09, ENG-10)
+- [ ] 02-02-PLAN.md — CC0 weather sample acquisition and verification (ENG-06, ENG-07, ENG-08)
 
 ### Phase 3: Mixer
 **Goal**: User can build a mix by layering any combination of sounds with individual volume controls and a master volume, all wired to the live audio graph
@@ -76,6 +80,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 1/1 | Complete   | 2026-03-19 |
-| 2. Sound Generation | 0/TBD | Not started | - |
+| 2. Sound Generation | 0/2 | Not started | - |
 | 3. Mixer | 0/TBD | Not started | - |
 | 4. Export | 0/TBD | Not started | - |
