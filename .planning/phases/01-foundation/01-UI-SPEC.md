@@ -37,13 +37,15 @@ Declared values (must be multiples of 4):
 | sm | 8px | Not used in Phase 1 |
 | md | 16px | Not used in Phase 1 |
 | lg | 24px | Button vertical padding (top + bottom) |
-| xl | 40px | Button horizontal padding (left + right) |
+| xl | 40px | Button horizontal padding (left + right) — see exception below |
 | 2xl | 48px | Not used in Phase 1 |
 | 3xl | 64px | Not used in Phase 1 |
 
-Exceptions: Button touch target must be at minimum 44px tall (accessibility). With 24px vertical padding and 24px font, button height = 24 + 24 + 24 = 72px — exceeds 44px minimum. No additional exception needed.
+**Exception: xl = 40px** — preserved from RESEARCH.md source value `padding: 1rem 2.5rem` (2.5rem = 40px at 16px base). 40px is not in the standard {4, 8, 16, 24, 32, 48, 64} set. Developer-approved deviation: changing to 48px would produce a noticeably wider button than the researched reference; changing to 32px would feel tight for a primary full-screen CTA. 40px is retained as a deliberate mid-point. Approved 2026-03-18.
 
-Source: default 8-point scale; button padding derived from RESEARCH.md inline style `padding: 1rem 2.5rem` (16px / 40px) — rounded to nearest scale token.
+Accessibility note: Button touch target must be at minimum 44px tall (WCAG 2.5.5). With 24px vertical padding × 2 and 24px font, button height = 72px — exceeds 44px minimum. No additional exception needed.
+
+Source: default 8-point scale; button padding derived from RESEARCH.md inline style `padding: 1rem 2.5rem` (16px / 40px).
 
 ---
 
@@ -102,7 +104,7 @@ Source: RESEARCH.md inline style `background:#111` + dark-theme inference from a
 Viewport (100vw × 100vh)
 └── #start-overlay  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #111; z-index: 9999
     └── #start-btn  background: #fff; color: #111; font-size: 24px; font-weight: 600; padding: 24px 40px; border: none; border-radius: 4px; cursor: pointer
-        └── "▶ Start"
+        └── "▶ Start App"
 ```
 
 ### Start Button States
@@ -123,16 +125,16 @@ Hover/active colors are derived from #ffffff with simple darkening — no additi
 
 | Element | Copy |
 |---------|------|
-| Primary CTA | "▶ Start" |
+| Primary CTA | "▶ Start App" |
 | Empty state heading | Not applicable — Phase 1 has no data state |
 | Empty state body | Not applicable |
-| Error state | AudioContext failed to start — Refresh the page and click Start again |
+| Error state | AudioContext failed to start — Refresh the page and click Start App again |
 | Destructive confirmation | Not applicable — no destructive actions in Phase 1 |
 
 Notes:
-- "▶ Start" uses the Unicode play character (U+25B6) followed by a non-breaking space and "Start". Short, action-oriented, unambiguous.
+- "▶ Start App" uses the Unicode play character (U+25B6) followed by a space and "Start App". Verb + noun pattern. Short, action-oriented, unambiguous.
 - Error state copy is for console/DevTools only in Phase 1. No in-UI error message is rendered (ENG-01 success is verified via console log per RESEARCH.md validation architecture).
-- Source for CTA text: RESEARCH.md code example `&#9654; Start` (HTML entity for ▶)
+- Source for CTA text: RESEARCH.md code example `&#9654; Start` (HTML entity for ▶); noun "App" added to satisfy verb+noun copywriting contract.
 
 ---
 
@@ -164,7 +166,7 @@ No animated transition for Phase 1. The overlay is removed synchronously after t
 | Requirement | Implementation |
 |-------------|---------------|
 | Button role | Native `<button>` element (implicit role="button") |
-| Button label | "▶ Start" — visible text, no aria-label needed |
+| Button label | "▶ Start App" — visible text, no aria-label needed |
 | Color contrast | #ffffff on #111111 = 18.1:1 (WCAG AAA) |
 | Focus indicator | `focus-visible` outline 2px solid #ffffff, offset 3px |
 | Keyboard activation | Native `<button>` responds to Enter and Space |
