@@ -59,7 +59,11 @@ Plans:
   3. User can control master output volume
   4. Active sounds are visually distinct from inactive sounds in the UI
   5. Toggling a sound off stops it cleanly with no audio glitch; toggling it on resumes it
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Wire master GainNode into audio graph and fix setGain smoothing (ENG-10, UI-04)
+- [ ] 03-02-PLAN.md — Build mixer UI replacing dev test UI (UI-01, UI-02, UI-03, UI-04, UI-05)
 
 ### Phase 4: Export
 **Goal**: User can export the current mix as a WAV file that loops gaplessly when dropped into a video editor
@@ -81,5 +85,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 1/1 | Complete   | 2026-03-19 |
 | 2. Sound Generation | 2/2 | Complete   | 2026-03-19 |
-| 3. Mixer | 0/TBD | Not started | - |
+| 3. Mixer | 0/2 | Not started | - |
 | 4. Export | 0/TBD | Not started | - |
