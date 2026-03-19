@@ -10,7 +10,8 @@ const activeNodes = new Map(); // id -> { source, gain, filter? }
 const workletReady = new Map(); // id -> boolean (tracks addModule completion)
 const sampleBuffers = new Map(); // id -> AudioBuffer (cached after first fetch)
 
-const DEFAULT_GAIN = 0.8;
+const DEFAULT_GAIN_NOISE = 0.3;  // Noise generators are full-amplitude continuous signal
+const DEFAULT_GAIN_SAMPLE = 0.8; // WAV recordings have natural headroom
 
 /**
  * Starts a sound by id. For noise types, registers the AudioWorklet (once) and
@@ -26,7 +27,7 @@ export async function startSound(id) {
   if (!entry) throw new Error(`Unknown sound id: ${id}`);
 
   const gainNode = ctx.createGain();
-  gainNode.gain.value = DEFAULT_GAIN;
+  gainNode.gain.value = entry.type === 'noise' ? DEFAULT_GAIN_NOISE : DEFAULT_GAIN_SAMPLE;
   gainNode.connect(ctx.destination);
 
   if (entry.type === 'noise') {
