@@ -7,7 +7,7 @@
 
 ### Audio Engine
 
-- [ ] **ENG-01**: App initializes AudioContext on first user gesture (no silent autoplay failure)
+- [x] **ENG-01**: App initializes AudioContext on first user gesture (no silent autoplay failure)
 - [ ] **ENG-02**: White noise is synthesized in real-time via AudioWorklet
 - [ ] **ENG-03**: Pink noise is synthesized in real-time via AudioWorklet
 - [ ] **ENG-04**: Brown noise is synthesized in real-time via AudioWorklet
@@ -66,7 +66,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ENG-01 | Phase 1 | Pending |
+| ENG-01 | Phase 1 | Complete |
 | ENG-02 | Phase 2 | Pending |
 | ENG-03 | Phase 2 | Pending |
 | ENG-04 | Phase 2 | Pending |
