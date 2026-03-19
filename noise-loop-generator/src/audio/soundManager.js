@@ -48,11 +48,14 @@ async function startNoise(ctx, entry, gainNode) {
   const processorName = `${entry.id}-noise-processor`;
   const source = new AudioWorkletNode(ctx, processorName);
 
-  // Grey noise: insert A-weighting IIR filter between source and gain
+  // Grey noise: boost lows via low-shelf BiquadFilter to approximate inverse A-weighting.
+  // The IIR A-weighting approach was numerically unstable (poles outside unit circle → blowup).
+  // A +10dB low-shelf at 800Hz gives a perceptually distinct "fuller" sound vs white noise.
   if (entry.id === 'grey') {
-    const feedforward = [0.234999, -0.469998, -0.234999, 0.939997, -0.234999, -0.469998, 0.234999];
-    const feedback = [1, -0.791732, -1.833498, 1.320396, 0.562088, -0.294095, -0.007868];
-    const filterNode = ctx.createIIRFilter(feedforward, feedback);
+    const filterNode = ctx.createBiquadFilter();
+    filterNode.type = 'lowshelf';
+    filterNode.frequency.value = 800;
+    filterNode.gain.value = 10;
     source.connect(filterNode);
     filterNode.connect(gainNode);
     activeNodes.set(entry.id, { source, gain: gainNode, filter: filterNode });
