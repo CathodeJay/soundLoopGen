@@ -10,7 +10,7 @@ const activeNodes = new Map(); // id -> { source, gain, filter? }
 const workletReady = new Map(); // id -> boolean (tracks addModule completion)
 const sampleBuffers = new Map(); // id -> AudioBuffer (cached after first fetch)
 
-const DEFAULT_GAIN_NOISE = 0.3;  // Noise generators are full-amplitude continuous signal
+const DEFAULT_GAIN_NOISE = 0.15; // Noise generators are full-amplitude continuous signal
 const DEFAULT_GAIN_SAMPLE = 0.8; // WAV recordings have natural headroom
 
 /**
