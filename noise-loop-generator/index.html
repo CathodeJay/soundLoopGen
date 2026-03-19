@@ -2,12 +2,75 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>noise-loop-generator</title>
+    <title>Noise Loop Generator</title>
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        background: #1e1e1e;
+        color: #ffffff;
+        min-height: 100vh;
+      }
+
+      #start-overlay {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #111111;
+        z-index: 9999;
+      }
+
+      #start-btn {
+        background: #ffffff;
+        color: #111111;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.0;
+        padding: 16px 40px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      #start-btn:hover {
+        background: #e0e0e0;
+      }
+
+      #start-btn:active {
+        background: #cccccc;
+        transform: scale(0.98);
+      }
+
+      #start-btn:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 3px;
+      }
+
+      #app {
+        display: none;
+        padding: 24px;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="start-overlay">
+      <button id="start-btn" type="button">&#9654; Start App</button>
+    </div>
+
+    <div id="app">
+      <!-- Phase 2+ UI mounts here -->
+    </div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
