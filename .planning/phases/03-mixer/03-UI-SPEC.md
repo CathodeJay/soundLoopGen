@@ -5,6 +5,7 @@ status: draft
 shadcn_initialized: false
 preset: none
 created: 2026-03-19
+updated: 2026-03-19
 ---
 
 # Phase 3 — UI Design Contract
@@ -23,7 +24,9 @@ created: 2026-03-19
 | Icon library | Unicode characters inline (▶ ■) — no library |
 | Font | system-ui, -apple-system, sans-serif (existing) |
 
-Source: CONTEXT.md (`Claude's Discretion` — no design system required), index.html (existing font stack)
+Source: CONTEXT.md (`Claude's Discretion` — no design system required); index.html (existing font stack confirmed)
+
+Note: `src/style.css` is the Vite default template and is NOT used by the app. All app styles are inline in `index.html` `<style>` block and JS. Phase 3 must continue this inline pattern.
 
 ---
 
@@ -34,16 +37,16 @@ Declared values (must be multiples of 4):
 | Token | Value | Usage |
 |-------|-------|-------|
 | xs | 4px | Icon gaps, tight inline padding |
-| sm | 8px | Row internal gaps, button padding vertical |
-| md | 16px | Button padding horizontal, label min-width buffer |
-| lg | 24px | App container padding (`#app` padding) |
-| xl | 32px | Section separation (sound list from master volume) |
+| sm | 8px | Row internal gap between elements; row vertical padding (`padding: 8px 0`) |
+| md | 16px | Button padding horizontal; container max-width buffer; divider margin |
+| lg | 24px | `#app` container padding (`padding: 24px` — confirmed index.html line 62) |
+| xl | 32px | Section separation (sound list from master volume section) |
 | 2xl | 48px | Not used this phase |
 | 3xl | 64px | Not used this phase |
 
-Exceptions: Row vertical padding 8px 0 (matches existing dev test UI pattern, source: main.js line 34)
-
-Touch target exception: toggle buttons minimum 44px height for usability on high-DPI displays.
+Exceptions:
+- Toggle button minimum height: 44px (usability on high-DPI displays — touch-target rule)
+- Row vertical padding: 8px 0 (matches existing dev test UI pattern, source: main.js line 34)
 
 ---
 
@@ -52,11 +55,15 @@ Touch target exception: toggle buttons minimum 44px height for usability on high
 | Role | Size | Weight | Line Height |
 |------|------|--------|-------------|
 | Body / Sound label | 16px | 400 (regular) | 1.5 |
-| Section label ("Master Volume") | 16px | 600 (semibold) | 1.5 |
-| Heading / App title (if shown) | 24px | 600 (semibold) | 1.2 |
-| Display (Start button, Phase 1) | 24px | 600 (semibold) | 1.0 |
+| Toggle button / Section label | 16px | 600 (semibold) | 1.5 |
+| Heading / Start button (Phase 1, retained) | 24px | 600 (semibold) | 1.0 |
 
-Source: index.html (body 16px/1.5/400 established; start-btn 24px/600 established). Only 2 sizes (16px, 24px) and 2 weights (400, 600) declared. Display row retained for Phase 1 overlay continuity.
+Notes:
+- Exactly 2 sizes: 16px and 24px. 24px is Phase 1 only (`#start-btn`) — no new 24px elements in Phase 3.
+- Exactly 2 weights: 400 (labels, body) and 600 (buttons, section labels).
+- Dev test UI used 24px/600 on Play/Stop buttons — Phase 3 corrects this to 16px/600 for the toggle button. 24px was appropriate for the Start screen CTA; it is oversized for an inline row control.
+
+Source: index.html (body 16px/1.5/400 established; start-btn 24px/600 confirmed)
 
 ---
 
@@ -64,54 +71,84 @@ Source: index.html (body 16px/1.5/400 established; start-btn 24px/600 establishe
 
 | Role | Value | Usage |
 |------|-------|-------|
-| Dominant (60%) | `#1e1e1e` | App background, inactive row background, button resting state |
-| Secondary (30%) | `#111111` | Overlay background (Start screen); divider zone between sound list and master volume |
-| Accent (10%) | `#4caf50` | Active row toggle button background and border ONLY — no other elements |
+| Dominant (60%) | `#1e1e1e` | App background, inactive row background, toggle button resting state |
+| Secondary (30%) | `#111111` | Start overlay background only; used as divider zone background if needed |
+| Accent (10%) | `#4caf50` | Active toggle button background and border — ONLY this element |
 | Destructive | not applicable | No destructive actions in this phase |
 
-Accent reserved for: active toggle button background + border only — never used on labels, sliders, or the master volume control.
+Accent reserved for: active toggle button background + border only. Never applied to: labels, sliders, master volume control, dividers, or any text.
 
-Additional surface tokens (from existing code):
-- Text: `#ffffff`
-- Border (row divider): `#2a2a2a`
-- Border (button resting): `#444`
-- Disabled / inactive opacity: `0.4` applied to greyed slider and inactive elements
+Additional surface tokens (confirmed from index.html and main.js):
 
-Source: CONTEXT.md `code_context` section; main.js inline styles confirmed.
+| Token | Value | Usage |
+|-------|-------|-------|
+| Text | `#ffffff` | All text, button labels |
+| Border (row divider) | `#2a2a2a` | Bottom border of each sound row |
+| Border (button resting) | `#444` | Toggle button border in inactive state |
+| Disabled / inactive opacity | `0.4` | Volume slider when sound is inactive; disabled button states |
+| Hover (Start btn) | `#e0e0e0` | Not used in mixer rows — Start btn only |
+
+Source: CONTEXT.md `code_context` section; index.html inline styles confirmed; main.js inline styles confirmed.
 
 ---
 
 ## Component Inventory
 
-### Sound Row (7 instances — one per catalog entry)
+### App Container Layout
 
-Layout: single-column vertical list, `flex-direction: column`, `gap: 0`.
+`#app` element: `display: block; padding: 24px; max-width: 480px;`
 
-Each row: `display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #2a2a2a;`
+The `max-width: 480px` is new for Phase 3 — constrains the mixer to a readable column width on wide displays. Not in the Phase 2 dev test but appropriate for the final UI. Source: Claude's Discretion.
+
+### Sound List (7 rows total)
+
+Container: `<div id="sound-list">` — `display: flex; flex-direction: column; gap: 0;`
+
+Each sound row: `<div class="sound-row">` — `display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #2a2a2a;`
 
 Elements per row (left to right):
-1. **Sound label** — `<span>` — sound name from catalog, 16px/400, `#ffffff`, `min-width: 120px`
-2. **Toggle button** — `<button>` — single button (replaces separate Play/Stop), shows "▶ On" or "■ Off" state — minimum height 44px — active state: background `#4caf50`, border `#4caf50`; inactive state: background `#1e1e1e`, border `#444`
-3. **Volume slider** — `<input type="range" min="0" max="1" step="0.01">` — occupies remaining row width — disabled + `opacity: 0.4` when sound is inactive; enabled when sound is active
 
-Active row: full `#ffffff` text opacity, toggle button background `#4caf50`
-Inactive row: sound label remains `#ffffff`, toggle button resting state, slider `opacity: 0.4`, slider `disabled`
+1. **Sound label** — `<span class="sound-label">` — text from `catalog.js` `label` field, 16px/400/`#ffffff`, `min-width: 100px`
+   - Catalog labels: White Noise, Pink Noise, Brown Noise, Grey Noise, Rain, Wind, Thunder
+   - Longest label is "Brown Noise" / "White Noise" (10 chars) — 100px is sufficient at 16px
+
+2. **Toggle button** — `<button class="btn-toggle">` — single button replacing separate Play/Stop pair
+   - Label when inactive: `▶ Play` (Unicode U+25B6)
+   - Label when active: `■ Stop` (Unicode U+25A0)
+   - Size: `font-size: 16px; font-weight: 600; min-height: 44px; padding: 4px 12px; border-radius: 4px; cursor: pointer;`
+   - Inactive state: `background: #1e1e1e; color: #ffffff; border: 1px solid #444;`
+   - Active state: `background: #4caf50; color: #ffffff; border: 1px solid #4caf50;`
+   - Focus-visible: `outline: 2px solid #ffffff; outline-offset: 3px;` (matches `#start-btn` pattern)
+
+3. **Volume slider** — `<input type="range" class="volume-slider" min="0" max="1" step="0.01">`
+   - Width: `flex: 1` (fills remaining row width)
+   - Active state: enabled, full opacity
+   - Inactive state: `disabled` attribute set + `opacity: 0.4; pointer-events: none;`
+   - Default value on first enable: `0.15` for noise types (`id` in white/pink/brown/grey); `0.8` for sample types (`id` in rain/wind/thunder)
+
+Row visual states:
+
+| State | Label | Toggle button | Slider |
+|-------|-------|--------------|--------|
+| Inactive | `#ffffff` opacity 1 | `#1e1e1e` bg, `#444` border, text "▶ Play" | `disabled`, opacity 0.4 |
+| Active | `#ffffff` opacity 1 | `#4caf50` bg, `#4caf50` border, text "■ Stop" | enabled, opacity 1 |
 
 ### Divider
 
-`<hr>` or `<div>` with `border-top: 1px solid #444; margin: 16px 0;` — separates sound list from master volume section
+`<div class="mixer-divider">` — `border-top: 1px solid #444; margin: 16px 0;`
 
-Source: CONTEXT.md decision ("separated by a visible divider")
+Placed between the last sound row and the Master Volume section. Source: CONTEXT.md decision ("separated by a visible divider").
 
 ### Master Volume Control
 
-Layout: `display: flex; align-items: center; gap: 8px; padding: 8px 0;`
+Container: `<div id="master-volume">` — `display: flex; align-items: center; gap: 8px; padding: 8px 0;`
 
 Elements:
-1. **Label** — `<span>` — text "Master Volume" — 16px/600/`#ffffff`
-2. **Slider** — `<input type="range" min="0" max="1" step="0.01" value="1.0">` — same style as per-sound sliders but always enabled — default value 1.0
 
-Source: CONTEXT.md decisions (master volume section)
+1. **Label** — `<span>` — text "Master Volume" — `font-size: 16px; font-weight: 600; color: #ffffff; min-width: 100px;`
+2. **Slider** — `<input type="range" id="master-slider" min="0" max="1" step="0.01" value="1.0">` — `flex: 1` — always enabled — no disabled state
+
+Source: CONTEXT.md decisions (master volume, default 1.0, range 0.0–1.0)
 
 ---
 
@@ -121,35 +158,36 @@ Source: CONTEXT.md decisions (master volume section)
 
 | Event | Action |
 |-------|--------|
-| click (inactive → active) | Call `await startSound(id)`; update button to active style; enable slider |
-| click (active → inactive) | Call `stopSound(id)`; update button to inactive style; disable slider (opacity 0.4) |
+| click (inactive → active) | `await startSound(id)`; set button to active style; set button text to "■ Stop"; enable slider (remove `disabled`, set opacity 1) |
+| click (active → inactive) | `stopSound(id)`; set button to inactive style; set button text to "▶ Play"; disable slider (`disabled` attribute, opacity 0.4) |
 
-State read on mount: `isPlaying(id)` — render initial toggle and slider state correctly.
+State read on mount: `isPlaying(id)` — render correct initial toggle state and slider enabled/disabled state for each row.
 
-Volume memory: per-sound volume stored in a JS Map keyed by catalog `id`. Toggling off does NOT reset the stored volume. Re-enabling restores the last value. Default on first enable: `DEFAULT_GAIN_NOISE = 0.15` for synthesized noise types; `DEFAULT_GAIN_SAMPLE = 0.8` for weather samples.
+Volume memory: per-sound volume stored in a `Map<id, number>` keyed by catalog `id`. Toggling off does NOT reset the stored volume. Re-enabling reads the stored value from the Map and sets `slider.value`. Default on first enable: `DEFAULT_GAIN_NOISE = 0.15` for type `noise`; `DEFAULT_GAIN_SAMPLE = 0.8` for type `sample`.
 
-Source: CONTEXT.md decisions (toggle interaction, volume slider behavior)
+Source: CONTEXT.md decisions (toggle interaction, volume slider behavior, volume memory)
 
 ### Volume slider (per-sound)
 
 | Event | Action |
 |-------|--------|
-| `input` (while dragging) | Call `setGain(id, value)` immediately — live update |
-| slider disabled | When sound is inactive — pointer-events blocked, opacity 0.4 |
+| `input` (while dragging) | `setGain(id, parseFloat(slider.value))`; update volume Map entry |
+| slider `disabled` | When sound is inactive — `pointer-events` blocked, opacity 0.4; no gain calls fired |
 
 ### Master volume slider
 
 | Event | Action |
 |-------|--------|
-| `input` | Set master GainNode gain value directly |
+| `input` | Set master GainNode gain: `masterGain.gain.value = parseFloat(slider.value)` |
 
-Default: 1.0 (full). Range: 0.0–1.0, step 0.01.
+Default: 1.0 (full). Range: 0.0–1.0, step 0.01. Always enabled.
 
 ### Focus / Accessibility
 
-- All `<button>` and `<input>` elements must be keyboard-reachable (native tab order)
-- Toggle button `focus-visible`: `outline: 2px solid #ffffff; outline-offset: 3px;` (matches existing Start button pattern from index.html)
+- All `<button>` and `<input>` elements must be keyboard-reachable (native tab order, no `tabIndex: -1`)
+- Toggle button `focus-visible`: `outline: 2px solid #ffffff; outline-offset: 3px;` (matches existing `#start-btn:focus-visible` pattern from index.html line 54–57)
 - Slider `focus-visible`: browser default is acceptable
+- Toggle button must have visible label text at all states — Unicode symbols (▶ ■) provide sufficient visual differentiation without requiring ARIA
 
 ---
 
@@ -160,13 +198,16 @@ Default: 1.0 (full). Range: 0.0–1.0, step 0.01.
 | Primary CTA (toggle on) | "▶ Play" |
 | Primary CTA (toggle off) | "■ Stop" |
 | Master volume label | "Master Volume" |
-| Sound row labels | Pulled directly from `catalog.js` `label` field — no transformation |
-| Empty state heading | Not applicable — catalog always has 7 entries; no empty state possible |
+| Sound row labels | Pulled directly from `catalog.js` `label` field — no transformation, no truncation |
+| Empty state heading | Not applicable — catalog always has exactly 7 entries; no empty state possible |
 | Empty state body | Not applicable |
-| Error state (startSound fails) | Console error only — `[main] Failed to start {id}: {err}` — no visible UI error in this phase |
+| Error state (startSound fails) | Console error only: `[main] Failed to start {id}: {err.message}` — no visible UI error in this phase |
 | Destructive confirmation | No destructive actions in this phase |
 
-Source: CONTEXT.md (no empty state needed — 7 fixed catalog entries); main.js (existing console error pattern retained)
+Catalog labels rendered verbatim:
+- White Noise, Pink Noise, Brown Noise, Grey Noise, Rain, Wind, Thunder
+
+Source: CONTEXT.md (no empty state needed — 7 fixed catalog entries); main.js line 64 (existing console error pattern retained)
 
 ---
 
@@ -177,7 +218,7 @@ Source: CONTEXT.md (no empty state needed — 7 fixed catalog entries); main.js 
 | shadcn official | none — project uses no design system | not applicable |
 | Third-party | none | not applicable |
 
-No component library or registry in use. All UI is hand-authored vanilla JS DOM.
+No component library or registry in use. All UI is hand-authored vanilla JS DOM. Registry vetting gate: not applicable.
 
 ---
 
