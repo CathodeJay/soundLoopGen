@@ -16,7 +16,7 @@ startBtn.addEventListener('click', async () => {
     const ctx = await ensureRunning();
     console.log('[main] AudioContext state after resume:', ctx.state);
     startOverlay.remove();
-    app.style.display = '';
+    app.style.display = 'block';
     renderDevTestUI();
   } catch (err) {
     console.error('[main] AudioContext failed to start:', err);
