@@ -11,6 +11,7 @@ const SAMPLE_RATE = 44100; // Project-wide constant. OfflineAudioContext in Phas
                             // reads audioCtx.sampleRate to stay in sync — do not change.
 
 let ctx = null;
+let masterGain = null;
 
 /**
  * Returns the AudioContext singleton, creating it lazily on first call.
@@ -38,4 +39,21 @@ export async function ensureRunning() {
     await context.resume();
   }
   return context;
+}
+
+/**
+ * Returns the master GainNode singleton, creating it lazily on first call.
+ * All per-sound gain nodes connect here instead of directly to ctx.destination,
+ * enabling a global master volume control.
+ * Must only be called after ensureRunning() has been invoked.
+ * @returns {GainNode}
+ */
+export function getMasterGain() {
+  if (!masterGain) {
+    const ctx = getContext();
+    masterGain = ctx.createGain();
+    masterGain.gain.value = 1.0;
+    masterGain.connect(ctx.destination);
+  }
+  return masterGain;
 }
