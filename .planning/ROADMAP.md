@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Project scaffold + AudioContext bootstrap with correct sample rate and autoplay handling (completed 2026-03-19)
 - [x] **Phase 2: Sound Generation** - All noise types synthesized via AudioWorklet; all CC0 samples loaded and looping gaplessly (completed 2026-03-19)
-- [ ] **Phase 3: Mixer** - Full mixing UI with per-sound controls, master volume, and live audio graph wired to state
+- [x] **Phase 3: Mixer** - Full mixing UI with per-sound controls, master volume, and live audio graph wired to state (completed 2026-03-20)
 - [ ] **Phase 4: Export** - WAV export at 30s/1min/2min via OfflineAudioContext; file loops gaplessly in video editors
 
 ## Phase Details
@@ -85,5 +85,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 1/1 | Complete   | 2026-03-19 |
 | 2. Sound Generation | 2/2 | Complete   | 2026-03-19 |
-| 3. Mixer | 1/2 | In Progress|  |
+| 3. Mixer | 2/2 | Complete   | 2026-03-20 |
 | 4. Export | 0/TBD | Not started | - |

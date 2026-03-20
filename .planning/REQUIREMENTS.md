@@ -20,11 +20,11 @@
 
 ### Mixer UI
 
-- [ ] **UI-01**: User sees a catalog of all available sounds with labels
-- [ ] **UI-02**: User can toggle each sound on/off with a play/pause control
-- [ ] **UI-03**: User can adjust each sound's volume with a slider
+- [x] **UI-01**: User sees a catalog of all available sounds with labels
+- [x] **UI-02**: User can toggle each sound on/off with a play/pause control
+- [x] **UI-03**: User can adjust each sound's volume with a slider
 - [x] **UI-04**: User can control master output volume
-- [ ] **UI-05**: Active sounds are visually distinct from inactive sounds
+- [x] **UI-05**: Active sounds are visually distinct from inactive sounds
 
 ### Export
 
@@ -76,11 +76,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ENG-08 | Phase 2 | Complete |
 | ENG-09 | Phase 2 | Complete |
 | ENG-10 | Phase 3 | Complete |
-| UI-01 | Phase 3 | Pending |
-| UI-02 | Phase 3 | Pending |
-| UI-03 | Phase 3 | Pending |
+| UI-01 | Phase 3 | Complete |
+| UI-02 | Phase 3 | Complete |
+| UI-03 | Phase 3 | Complete |
 | UI-04 | Phase 3 | Complete |
-| UI-05 | Phase 3 | Pending |
+| UI-05 | Phase 3 | Complete |
 | EXP-01 | Phase 4 | Pending |
 | EXP-02 | Phase 4 | Pending |
 | EXP-03 | Phase 4 | Pending |
