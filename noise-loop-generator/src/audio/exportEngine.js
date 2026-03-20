@@ -104,8 +104,10 @@ export async function exportMix({ activeSounds, gains, masterGainValue, duration
   const data = renderedBuffer.getChannelData(0);
 
   for (let i = 0; i < crossfadeSamples; i++) {
-    const tailFade = 1 - (i / crossfadeSamples); // linear 1 -> 0
-    data[i] += data[durationSamples + i] * tailFade;
+    const headFade = i / crossfadeSamples;        // 0.0 → 1.0  (head fades in)
+    const tailFade = 1 - headFade;                // 1.0 → 0.0  (tail fades out)
+    // Replace (not add): blend tail continuation into head so loop join is seamless
+    data[i] = data[durationSamples + i] * tailFade + data[i] * headFade;
   }
 
   // Create trimmed buffer at exact export duration
