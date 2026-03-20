@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
-stopped_at: Phase 4 plan complete
-last_updated: "2026-03-20T12:17:17.553Z"
+status: complete
+stopped_at: Completed 04-export/04-01-PLAN.md
+last_updated: "2026-03-20T12:35:59Z"
 progress:
   total_phases: 4
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 6
-  completed_plans: 5
+  completed_plans: 6
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-18)
 
 **Core value:** Generate a seamlessly-looping WAV file from a mix of calming sounds that can be dropped straight into a video editor.
-**Current focus:** Phase 03 — mixer
+**Current focus:** Phase 04 — export
 
 ## Current Position
 
-Phase: 03 (mixer) — COMPLETE
-Plan: 2 of 2
+Phase: 04 (export) — COMPLETE
+Plan: 1 of 1 (ALL COMPLETE)
 
 ## Performance Metrics
 
@@ -51,6 +51,7 @@ Plan: 2 of 2
 | Phase 02-sound-generation P02 | 1min | 1 tasks | 4 files |
 | Phase 03-mixer P01 | 1min | 2 tasks | 3 files |
 | Phase 03-mixer P02 | 3min | 1 tasks | 1 files |
+| Phase 04-export P01 | 2min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,10 @@ Recent decisions affecting current work:
 - [Phase 03-mixer]: Per-sound GainNodes connect to getMasterGain() not ctx.destination — single insertion point for global volume bus
 - [Phase 03-mixer]: renderMixer replaces renderDevTestUI — single toggle button per row (not separate Play/Stop pair)
 - [Phase 03-mixer]: volumeMap initialized with defaults at render time for all 7 sounds, master slider uses .gain.value directly (not setTargetAtTime)
+- [Phase 04-export]: Float32Array noise generation (not AudioWorkletNode) in OfflineAudioContext — AudioWorkletNode unreliable across browsers
+- [Phase 04-export]: CROSSFADE_SEC = 1.5s — additive tail crossfade (+=) blends decaying tail onto head at full amplitude for gapless looping
+- [Phase 04-export]: 16-bit PCM WAV output via audiobuffer-to-wav — maximum video editor compatibility
+- [Phase 04-export]: exportMix accepts explicit gains Map and masterGainValue — no hidden dependencies on main.js internals
 
 ### Pending Todos
 
@@ -88,6 +93,5 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-20T12:17:17.550Z
-Stopped at: Phase 4 plan complete
-Resume file: .planning/phases/04-export/04-01-PLAN.md
+Last session: 2026-03-20T12:35:59Z
+Stopped at: Completed 04-export/04-01-PLAN.md — all phases complete

@@ -28,10 +28,10 @@
 
 ### Export
 
-- [ ] **EXP-01**: User can export the current mix as a WAV file
-- [ ] **EXP-02**: User can select export duration before downloading (30s / 1min / 2min)
-- [ ] **EXP-03**: Exported WAV file loops gaplessly when imported into a video editor
-- [ ] **EXP-04**: Export uses the same sample rate as the live AudioContext (no resampling artifacts)
+- [x] **EXP-01**: User can export the current mix as a WAV file
+- [x] **EXP-02**: User can select export duration before downloading (30s / 1min / 2min)
+- [x] **EXP-03**: Exported WAV file loops gaplessly when imported into a video editor
+- [x] **EXP-04**: Export uses the same sample rate as the live AudioContext (no resampling artifacts)
 
 ## v2 Requirements
 
@@ -81,10 +81,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UI-03 | Phase 3 | Complete |
 | UI-04 | Phase 3 | Complete |
 | UI-05 | Phase 3 | Complete |
-| EXP-01 | Phase 4 | Pending |
-| EXP-02 | Phase 4 | Pending |
-| EXP-03 | Phase 4 | Pending |
-| EXP-04 | Phase 4 | Pending |
+| EXP-01 | Phase 4 | Complete |
+| EXP-02 | Phase 4 | Complete |
+| EXP-03 | Phase 4 | Complete |
+| EXP-04 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 19 total
