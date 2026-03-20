@@ -8,7 +8,7 @@
 import { getContext } from './AudioEngine.js';
 import audioBufferToWav from 'audiobuffer-to-wav';
 
-const CROSSFADE_SEC = 1.5;
+const CROSSFADE_SEC = 3;
 
 const FILENAMES = {
   30: 'noise-mix-30s.wav',
@@ -104,9 +104,11 @@ export async function exportMix({ activeSounds, gains, masterGainValue, duration
   const data = renderedBuffer.getChannelData(0);
 
   for (let i = 0; i < crossfadeSamples; i++) {
-    const headFade = i / crossfadeSamples;        // 0.0 → 1.0  (head fades in)
-    const tailFade = 1 - headFade;                // 1.0 → 0.0  (tail fades out)
-    // Replace (not add): blend tail continuation into head so loop join is seamless
+    // Equal-power crossfade (sin/cos): maintains constant perceived loudness throughout.
+    // Linear fades create a -3 dB dip at the midpoint that is audible on noise.
+    const theta = (i / crossfadeSamples) * (Math.PI / 2);
+    const headFade = Math.sin(theta);   // 0.0 → 1.0  (head fades in)
+    const tailFade = Math.cos(theta);   // 1.0 → 0.0  (tail fades out)
     data[i] = data[durationSamples + i] * tailFade + data[i] * headFade;
   }
 
