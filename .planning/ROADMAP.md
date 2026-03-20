@@ -74,7 +74,10 @@ Plans:
   2. Clicking export triggers a WAV file download
   3. The exported WAV file, when imported into a video editor and looped, plays without an audible gap at the loop boundary
   4. Exported audio matches the live mix (same sounds, same relative volumes)
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 04-01-PLAN.md — Export engine (OfflineAudioContext render + crossfade + WAV encode) and export UI section (EXP-01, EXP-02, EXP-03, EXP-04)
 
 ## Progress
 
@@ -86,4 +89,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Foundation | 1/1 | Complete   | 2026-03-19 |
 | 2. Sound Generation | 2/2 | Complete   | 2026-03-19 |
 | 3. Mixer | 2/2 | Complete   | 2026-03-20 |
-| 4. Export | 0/TBD | Not started | - |
+| 4. Export | 0/1 | Not started | - |
