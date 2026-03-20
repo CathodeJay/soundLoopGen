@@ -23,7 +23,7 @@
 - [ ] **UI-01**: User sees a catalog of all available sounds with labels
 - [ ] **UI-02**: User can toggle each sound on/off with a play/pause control
 - [ ] **UI-03**: User can adjust each sound's volume with a slider
-- [ ] **UI-04**: User can control master output volume
+- [x] **UI-04**: User can control master output volume
 - [ ] **UI-05**: Active sounds are visually distinct from inactive sounds
 
 ### Export
@@ -79,7 +79,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UI-01 | Phase 3 | Pending |
 | UI-02 | Phase 3 | Pending |
 | UI-03 | Phase 3 | Pending |
-| UI-04 | Phase 3 | Pending |
+| UI-04 | Phase 3 | Complete |
 | UI-05 | Phase 3 | Pending |
 | EXP-01 | Phase 4 | Pending |
 | EXP-02 | Phase 4 | Pending |
