@@ -3,7 +3,7 @@
 // Noise sounds use AudioWorkletNode. Sample sounds use AudioBufferSourceNode.
 // Phase 4 export will re-use these same factories with OfflineAudioContext.
 
-import { ensureRunning } from './AudioEngine.js';
+import { ensureRunning, getContext, getMasterGain } from './AudioEngine.js';
 import { catalog } from '../data/catalog.js';
 
 const activeNodes = new Map(); // id -> { source, gain, filter? }
@@ -28,7 +28,7 @@ export async function startSound(id) {
 
   const gainNode = ctx.createGain();
   gainNode.gain.value = entry.type === 'noise' ? DEFAULT_GAIN_NOISE : DEFAULT_GAIN_SAMPLE;
-  gainNode.connect(ctx.destination);
+  gainNode.connect(getMasterGain());
 
   if (entry.type === 'noise') {
     await startNoise(ctx, entry, gainNode);
@@ -115,7 +115,12 @@ export function stopSound(id) {
 export function setGain(id, value) {
   const nodes = activeNodes.get(id);
   if (!nodes) return;
-  nodes.gain.gain.value = Math.max(0, Math.min(1, value));
+  const ctx = getContext();
+  nodes.gain.gain.setTargetAtTime(
+    Math.max(0, Math.min(1, value)),
+    ctx.currentTime,
+    0.015
+  );
 }
 
 /**
