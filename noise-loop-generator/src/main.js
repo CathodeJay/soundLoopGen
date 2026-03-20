@@ -5,6 +5,7 @@
 import { ensureRunning, getMasterGain } from './audio/AudioEngine.js';
 import { startSound, stopSound, setGain, isPlaying } from './audio/soundManager.js';
 import { catalog } from './data/catalog.js';
+import { exportMix } from './audio/exportEngine.js';
 
 const startBtn = document.getElementById('start-btn');
 const startOverlay = document.getElementById('start-overlay');
@@ -107,6 +108,7 @@ function renderMixer() {
           stopSound(id);
           setInactiveState();
         }
+        updateExportState();
       } catch (err) {
         console.error(`[main] Failed to start ${id}: ${err.message}`);
       }
@@ -148,4 +150,95 @@ function renderMixer() {
 
   masterSection.append(masterLabel, masterSlider);
   app.appendChild(masterSection);
+
+  // Second divider — between master volume and export section
+  const divider2 = document.createElement('div');
+  divider2.className = 'mixer-divider';
+  divider2.style.cssText = 'border-top:1px solid #444;margin:16px 0;';
+  app.appendChild(divider2);
+
+  // Export section container
+  const exportSection = document.createElement('div');
+  exportSection.id = 'export-section';
+
+  // Export row: label + dropdown + button on one line
+  const exportRow = document.createElement('div');
+  exportRow.className = 'export-row';
+  exportRow.style.cssText = 'display:flex;align-items:center;gap:8px;padding:8px 0;';
+
+  // "Export" label — matching "Master Volume" label style
+  const exportLabel = document.createElement('span');
+  exportLabel.textContent = 'Export';
+  exportLabel.style.cssText = 'font-size:16px;font-weight:600;color:#ffffff;min-width:100px;';
+
+  // Duration dropdown — native <select>, default 30s
+  const durationSelect = document.createElement('select');
+  durationSelect.id = 'duration-select';
+  durationSelect.style.cssText = 'background:#1e1e1e;color:#ffffff;border:1px solid #444;padding:4px 8px;border-radius:4px;font-size:16px;';
+  [['30 seconds', '30'], ['1 minute', '60'], ['2 minutes', '120']].forEach(([label, val]) => {
+    const opt = document.createElement('option');
+    opt.value = val;
+    opt.textContent = label;
+    durationSelect.appendChild(opt);
+  });
+
+  // Export WAV button — inactive style (not green accent)
+  const exportBtn = document.createElement('button');
+  exportBtn.id = 'export-btn';
+  exportBtn.className = 'btn-toggle';
+  exportBtn.textContent = 'Export WAV';
+  exportBtn.style.cssText = 'background:#1e1e1e;color:#ffffff;border:1px solid #444;font-size:16px;font-weight:600;min-height:44px;padding:4px 12px;border-radius:4px;cursor:pointer;';
+
+  // Warning hint — amber text, shown when no sounds are active
+  const exportHint = document.createElement('div');
+  exportHint.className = 'export-hint';
+  exportHint.textContent = 'Turn on at least one sound to export';
+  exportHint.style.cssText = 'font-size:14px;color:#ffcc00;padding:0 0 8px 0;display:none;';
+
+  // Assemble export section
+  exportRow.append(exportLabel, durationSelect, exportBtn);
+  exportSection.append(exportRow, exportHint);
+  app.appendChild(exportSection);
+
+  // State management — updates button disabled state and hint visibility
+  function updateExportState() {
+    const hasActive = catalog.some(({ id }) => isPlaying(id));
+    exportBtn.disabled = !hasActive;
+    exportBtn.style.opacity = hasActive ? '1' : '0.4';
+    exportBtn.style.cursor = hasActive ? 'pointer' : 'default';
+    exportHint.style.display = hasActive ? 'none' : 'block';
+  }
+
+  // Set initial state
+  updateExportState();
+
+  // Export button click handler
+  exportBtn.addEventListener('click', async () => {
+    if (exportBtn.disabled) return;
+
+    // Switch to rendering state
+    exportBtn.textContent = 'Rendering...';
+    exportBtn.disabled = true;
+    exportBtn.style.opacity = '0.4';
+    exportBtn.style.cursor = 'default';
+
+    try {
+      const activeSounds = catalog
+        .filter(({ id }) => isPlaying(id))
+        .map(({ id, type }) => ({ id, type }));
+
+      await exportMix({
+        activeSounds,
+        gains: volumeMap,
+        masterGainValue: getMasterGain().gain.value,
+        durationSec: parseInt(durationSelect.value, 10),
+      });
+    } catch (err) {
+      console.error('[main] Export failed:', err);
+    }
+
+    // Reset button — re-evaluate state (sounds may have changed during render)
+    exportBtn.textContent = 'Export WAV';
+    updateExportState();
+  });
 }
